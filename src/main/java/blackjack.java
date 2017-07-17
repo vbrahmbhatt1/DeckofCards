@@ -12,15 +12,13 @@ public class blackjack {
         playingDeck.createafulldeckofcards();
         playingDeck.shuffle();
 
-        //Create a deck for the player
-        Deck playersdeck = new Deck();
-        //Create a deck for the dealer
-        Deck dealersdeck = new Deck();
-
+        Deck playersdeck = new Deck();   //Create a deck for the player
         double playingmoney = 10000.00;
+        Deck dealersdeck = new Deck();      //Create a deck for the dealer
+
         Scanner userInput = new Scanner(System.in);
 
-        //Game Loop
+        //Game Loop, the player has money
         while(playingmoney > 0){
             System.out.println(playingmoney + "\n" + "bet how much: ");
             double playbet = userInput.nextDouble();
@@ -30,23 +28,24 @@ public class blackjack {
                 break;
             }
 
-            //Start dealing
+            //Start dealing, player gets 2 cards
             playersdeck.draw(playingDeck);
             playersdeck.draw(playingDeck);
 
+            //dealer gets 2 cards
             dealersdeck.draw(playingDeck);
             dealersdeck.draw(playingDeck);
 
             while(true){
-                System.out.println("In hand:" + playersdeck.toString());
-                System.out.println("your hand: " + playersdeck.carddsValue());
+                System.out.println("In hand:" + playersdeck.toString());    //show's player's card
+                System.out.println("your hand: " + playersdeck.carddsValue());      //show value
                 System.out.println("dealer hand: " + dealersdeck.getCard(0).toString());
 
                 //hit or stand?
                 System.out.println("(1)Hit or (2)Stand?");
                 int respone = userInput.nextInt();
 
-                if (respone == 1){
+                if (respone == 1){      //hit
                     playersdeck.draw(playingDeck);
                     System.out.println("you draw" + "\n" + playersdeck.getCard(playersdeck.deckSize()-1).toString());
                     if(playersdeck.carddsValue() > 21){
@@ -81,6 +80,7 @@ public class blackjack {
                 endRound = true;
             }
 
+            //for push
             if((playersdeck.carddsValue() == dealersdeck.carddsValue()) && endRound == false){
                 endRound = true;
             }
@@ -93,7 +93,7 @@ public class blackjack {
             else if(endRound == false){
                 System.out.println("you lose the hand.");
                 playingmoney -= playbet;
-                endRound = true;
+                //endRound = true;
             }
 
             playersdeck.movealltodeck(playingDeck);
